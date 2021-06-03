@@ -17,6 +17,58 @@ kill -9 <PID>
 
 Visit the URLs in the browser or via a REST API tool.
 
+# REST API
+
+## Create
+
+```
+POST http://localhost:8080/todo/create
+```
+
+```
+{
+    "title": "Clean Room",
+    "description": "Do it!"
+}
+```
+
+## Retrieve
+
+```
+GET http://localhost:8080/todo/all
+```
+
+## Update
+
+Use a todo and supply it's id. The id contained in the response when the Todo is initially created!
+
+```
+POST http://localhost:8080/todo/create
+```
+
+```
+{
+    "title": "Clean YOUR Room",
+    "description": "Do it! Do it now!",
+    "id": 2
+}
+```
+
+## Delete
+
+Call the URL below and replace <ID> with the id of the Todo you want to delete.
+The ids are returned in the Retrieve operations or when a Todo is created initially.
+
+```
+DELETE http://localhost:8080/todo/delete/<ID>
+```
+
+Example:
+
+```
+DELETE http://localhost:8080/todo/delete/1
+```
+
 # Creating the app
 
 See: https://github.com/Thewbi/express_typescript_boilerplate

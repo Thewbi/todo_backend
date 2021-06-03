@@ -1,60 +1,57 @@
 import express from "express";
-
 import "reflect-metadata";
-import {createConnection} from "typeorm";
 
-import {User} from "../entity/User";
-
-import {getManager} from "typeorm";
+import { Todo } from "../entity/Todo";
+import { getManager } from "typeorm";
 
 var todoRouter = express.Router();
 
-class Result {
-    constructor(message:string, code:number) {
-        this.message = message;
-        this.code = code;
-    }
-  message: string;
-  code: number;
-};
+// Create / Update
+todoRouter.post("/create", async function (req, res, next) {
+  const todo = req.body;
 
-todoRouter.post('/create', async function (req, res, next) {
+  // get a repository to perform operations
+  const repository = getManager().getRepository(Todo);
 
-    const user = req.body;
-
-     // get a repository to perform operations
-    const userRepository = getManager().getRepository(User);
-
-    let savedUser = userRepository.save(user).then(user => {
-        res.send(user);
-    });
-
+  let savedEntity = repository.save(todo).then((todo) => {
+    res.send(todo);
+  });
 });
 
-todoRouter.get('/all', async function (req, res, next) {
+// Retrieve
+todoRouter.get("/all", async function (req, res, next) {
+  // get a repository to perform operations
+  const repository = getManager().getRepository(Todo);
 
-    // get a repository to perform operations
-    const userRepository = getManager().getRepository(User);
+  // load all entities
+  const todos = await repository.find();
 
-    // load all entities
-    const users = await userRepository.find();
-
-    // return loaded entities
-    res.send(users);
-
+  // return loaded entities
+  res.send(todos);
 });
 
-todoRouter.delete('/delete/:userId', async function (req, res, next) {
+// Retrieve
+todoRouter.get("/:id", async function (req, res, next) {
+  // get a repository to perform operations
+  const repository = getManager().getRepository(Todo);
 
-    // get a repository to perform operations
-    const userRepository = getManager().getRepository(User);
+  // load all entities
+  const todos = await repository.findOne(req.params.id);
 
-    // load all entities
-    const users = await userRepository.delete(req.params.userId);
+  // return loaded entities
+  res.send(todos);
+});
 
-    // return loaded entities
-    res.send('OK');
+// Delete
+todoRouter.delete("/delete/:id", async function (req, res, next) {
+  // get a repository to perform operations
+  const repository = getManager().getRepository(Todo);
 
+  // delete entity
+  const todo = await repository.delete(req.params.id);
+
+  // return loaded entities
+  res.send(todo);
 });
 
 export default todoRouter;
