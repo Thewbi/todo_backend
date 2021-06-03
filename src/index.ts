@@ -32,16 +32,21 @@ import todoRouter from "./routes/todorouter";
 // TypeORM creates connection pools and uses them for your requests
 createConnection().then(async connection => {
 
-const app = express();
+    const app = express();
 
-app.use('/', indexRouter);
-app.use('/todo', todoRouter);
+    // Parse JSON bodies for this app. Make sure you put
+    // `app.use(express.json())` **before** your route handlers!
+    app.use(express.json());
 
-// default port to listen on
-const port = 8080;
+    app.use('/', indexRouter);
+    app.use('/todo', todoRouter);
 
-// start the Express server
-app.listen( port, () => {
-    console.log( `server started at http://localhost:${ port }` );
-} );
+    // default port to listen on
+    const port = 8080;
+
+    // start the Express server
+    app.listen( port, () => {
+        console.log( `server started at http://localhost:${ port }` );
+    });
+
 }).catch(error => console.log("TypeORM connection error: ", error));

@@ -21,6 +21,12 @@ Visit the URLs in the browser or via a REST API tool.
 
 See: https://github.com/Thewbi/express_typescript_boilerplate
 
+## CommonJS vs ES6 Modules
+
+TypeORM seems to work correctly with CommonJS modules and it fails to import the Column class using ES6 modules.
+
+This is the reason why this project uses CommonJS modules. It does not matter really because by using typescript, you will never lookt at the generated javascript files anyways. It does not matter weather those javascript files use CommonJS or ES6 modules.
+
 ## Persistence
 
 ### Install Postgre SQL

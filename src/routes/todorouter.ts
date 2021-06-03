@@ -20,50 +20,15 @@ class Result {
 
 todoRouter.post('/create', async function (req, res, next) {
 
-    const user = new User();
-    user.firstName = "Timber";
-    user.lastName = "Saw";
-    user.age = 25;
+    const user = req.body;
 
      // get a repository to perform operations
     const userRepository = getManager().getRepository(User);
 
-    // load all entities
-    const newUser = await userRepository.create(user);
+    let savedUser = userRepository.save(user).then(user => {
+        res.send(user);
+    });
 
-    userRepository.save(newUser);
-
-    // return loaded entities
-    res.send(newUser);
-
-    // // console.log(req);
-
-    // // let result: Result;
-    // // result = new Result("Your data was processed! Result:OK", 123);
-
-    // // res.status(200).send(result);
-    // const existentConn = getConnectionManager().get("default");
-
-    // createConnection().then(async connection => {
-    // console.log("Inserting a new user into the database...");
-    // const user = new User();
-    // user.firstName = "Timber";
-    // user.lastName = "Saw";
-    // user.age = 25;
-    // await connection.manager.save(user);
-    // console.log("Saved a new user with id: " + user.id);
-
-    // return user;
-
-
-
-    // }).then((user) => {
-    //     res.send(JSON.stringify(user));
-    // }).catch(error => {
-    //     console.log(error);
-    // res.send("ERROR");});
-
-     //res.send('OK');
 });
 
 todoRouter.get('/all', async function (req, res, next) {
@@ -77,28 +42,18 @@ todoRouter.get('/all', async function (req, res, next) {
     // return loaded entities
     res.send(users);
 
-    // createConnection().then(async connection => {
-    // // console.log("Inserting a new user into the database...");
-    // // const user = new User();
-    // // user.firstName = "Timber";
-    // // user.lastName = "Saw";
-    // // user.age = 25;
-    // // await connection.manager.save(user);
-    // // console.log("Saved a new user with id: " + user.id);
+});
 
-    // console.log("Loading users from the database...");
-    // const users = await connection.manager.find(User);
-    // console.log("Loaded users: ", users);
+todoRouter.delete('/delete/:userId', async function (req, res, next) {
 
+    // get a repository to perform operations
+    const userRepository = getManager().getRepository(User);
 
-    // return users;
+    // load all entities
+    const users = await userRepository.delete(req.params.userId);
 
-    // }).then((users) => {
-    //     res.send(JSON.stringify(users));
-    // }).catch(error => {
-    //     console.log(error);
-    // res.send("ERROR");});
-
+    // return loaded entities
+    res.send('OK');
 
 });
 
