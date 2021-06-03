@@ -19,9 +19,10 @@
     "typescript": "3.3.3333"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "mysql": "^2.14.1",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.10",
-    "typeorm": "0.2.33",
-    "mysql": "^2.14.1"
+    "typeorm": "0.2.33"
   }
 }

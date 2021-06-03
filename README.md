@@ -132,3 +132,16 @@ Initialize typeorm
 ```
 typeorm init
 ```
+
+## CORS
+
+When the API is accessed from another origin (Host, HTML file, ...) it will prevent that usage.
+To enable that usage, you have to enable cors in the server so it tells the host to send a CORS header.
+
+```
+npm install --save cors
+```
+
+```
+app.use(cors());
+```
